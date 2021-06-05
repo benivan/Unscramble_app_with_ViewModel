@@ -1,4 +1,16 @@
-
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/nav_graph" />
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/gameFragment">
+
+    <fragment
+        android:id="@+id/gameFragment"
+        android:name="com.aiden.unscrambleappwithviewmodel.ui.GameFragment"
+        android:label="Unscramble"
+        tools:layout="@layout/game_fragment"
+
+        />
+
+
+</navigation>

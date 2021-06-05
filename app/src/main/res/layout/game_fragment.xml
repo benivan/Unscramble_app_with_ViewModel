@@ -70,19 +70,19 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:text="3 of 10 words" />
 
-        <TextView
-            android:id="@+id/score"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="10dp"
-            android:layout_marginVertical="4dp"
-            android:padding="4dp"
-            android:text="score"
-            android:textAllCaps="true"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="Score: 20" />
+    <TextView
+        android:id="@+id/score"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginVertical="4dp"
+        android:padding="4dp"
+        android:text="score"
+        android:textAllCaps="true"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Score:20" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textField"
@@ -90,7 +90,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:layout_marginHorizontal="10dp"
-
             android:hint="@string/enter_your_word"
             app:errorIconDrawable="@drawable/ic_error"
             app:helperTextTextAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
