@@ -1,6 +1,5 @@
 package com.aiden.unscrambleappwithviewmodel.ui
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -13,9 +12,9 @@ class GameViewModel: ViewModel() {
     private lateinit var currentWord: String
 
 
-    private var _score = 0
-    val score: String
-    get() = _score.toString()
+    private var _score : MutableLiveData<Int> = MutableLiveData(0)
+    val score: LiveData<Int>
+    get() = _score
 
     private var  _wordCount: MutableLiveData<Int> = MutableLiveData(0)
     val wordCount :LiveData<Int>
@@ -38,7 +37,7 @@ class GameViewModel: ViewModel() {
         val tempWord = currentWord.toCharArray()
         tempWord.shuffle()
 
-        while (tempWord.toString().equals(currentWord, false)) {
+        while (String(tempWord) == currentWord) {
             tempWord.shuffle()
         }
         if (wordsList.contains(currentWord)) {
@@ -48,6 +47,25 @@ class GameViewModel: ViewModel() {
             _wordCount.value = _wordCount.value!! + 1
             wordsList.add(currentWord)
         }
+    }
+
+
+    fun isUserWordCorrect(playerWord: String): Boolean {
+        if (playerWord.equals(currentWord, true)) {
+            increaseScore()
+            return true
+        }
+        return false
+    }
+
+    private fun increaseScore() {
+        _score.value = _score.value!! + 1
+    }
+
+    fun reset() {
+        _score.value = 0
+        _wordCount.value = 0
+        wordsList = mutableListOf()
     }
 
 }
