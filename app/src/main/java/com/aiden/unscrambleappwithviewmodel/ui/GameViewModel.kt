@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.aiden.unscrambleappwithviewmodel.model.MAX_NO_OF_WORDS
 import com.aiden.unscrambleappwithviewmodel.model.allWordsList
+import com.aiden.unscrambleappwithviewmodel.model.easyWordList
 
 class GameViewModel: ViewModel() {
 
@@ -33,7 +34,7 @@ class GameViewModel: ViewModel() {
     }
 
      fun getNextWord() {
-        currentWord = allWordsList.random()
+        currentWord = easyWordList.random()
         val tempWord = currentWord.toCharArray()
         tempWord.shuffle()
 

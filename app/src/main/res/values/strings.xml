@@ -1,4 +1,14 @@
 <resources>
     <string name="app_name">Unscramble App with ViewModel</string>
     <string name="enter_your_word">Enter Your Word</string>
+
+    <string-array name="LetterInWord">
+        <item>Three</item>
+        <item>Four</item>
+        <item>Five</item>
+        <item>Six</item>
+        <item>Seven</item>
+        <item>Eight</item>
+        <item>Nine</item>
+    </string-array>
 </resources>
