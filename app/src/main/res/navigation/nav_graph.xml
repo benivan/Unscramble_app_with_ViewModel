@@ -2,15 +2,28 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/gameFragment">
+    app:startDestination="@id/difficultyFragment">
+
+    <fragment
+        android:id="@+id/difficultyFragment"
+        android:name="com.aiden.unscrambleappwithviewmodel.ui.DifficultyFragment"
+        android:label="Unscramble"
+        tools:layout="@layout/difficulty_fragment" >
+        <action
+            android:id="@+id/action_difficultyFragment_to_gameFragment"
+            app:destination="@id/gameFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/gameFragment"
         android:name="com.aiden.unscrambleappwithviewmodel.ui.GameFragment"
-        android:label="Unscramble"
-        tools:layout="@layout/game_fragment"
-
-        />
+        android:label="Game"
+        tools:layout="@layout/game_fragment">
+        <argument
+            android:name="difficulty"
+            app:argType="integer"
+            android:defaultValue="5" />
+    </fragment>
 
 
 </navigation>
