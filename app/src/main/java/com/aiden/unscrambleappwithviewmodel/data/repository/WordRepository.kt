@@ -8,7 +8,6 @@ class WordRepository {
 
     suspend fun getWords(
         offset: Int,
-        limit: Int,
         wordsLength: Int
-    ) = wordsService.getWords(offset,wordsLength,limit)
+    ) = wordsService.getWords(offset,wordsLength)
 }
