@@ -2,6 +2,8 @@
     <string name="app_name">Unscramble App with ViewModel</string>
     <string name="enter_your_word">Enter Your Word</string>
 
+    <string name="instruction"> press icon for hint -></string>
+
     <string-array name="LetterInWord">
         <item>Three</item>
         <item>Four</item>
