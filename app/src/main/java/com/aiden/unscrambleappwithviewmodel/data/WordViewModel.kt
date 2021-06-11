@@ -61,7 +61,7 @@ class WordViewModel : ViewModel() {
         } else false
     }
 
-    fun getNextWord() {
+    private fun getNextWord() {
         if (words.value!!.isNotEmpty()) {
             _currentWord.value = words.value!!.random()
 
