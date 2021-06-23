@@ -46,7 +46,6 @@ class WordViewModel : ViewModel() {
             try {
                 val words1 = wordsRepository.getWords(offset, wordsLength)
                 _words.value = words1.data.items
-//                Log.d("WordViewModel", words1.data.items.toString())
             } catch (e: Exception) {
                 e.printStackTrace()
                 _words.value = emptyList()
