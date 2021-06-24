@@ -16,6 +16,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.aiden.unscrambleappwithviewmodel.data.WordViewModel
 import com.aiden.unscrambleappwithviewmodel.databinding.GameFragmentBinding
+import com.aiden.unscrambleappwithviewmodel.model.MAX_NO_OF_WORDS
 import com.aiden.unscrambleappwithviewmodel.util.CountDownTimerExt
 import kotlin.system.exitProcess
 
@@ -35,9 +36,12 @@ class GameFragment : Fragment() {
 
     private var isAnswerGiven: Boolean = false
 
+    private  var wordCount:Int = 0
+
     private var colorRed: Int = 0
     private var colorGreen: Int = 255
     private var colorBlue: Int = 0
+
 
 
     private val wordsViewModel by viewModels<WordViewModel>()
@@ -78,6 +82,7 @@ class GameFragment : Fragment() {
             binding.hintText.text = it
         }
 
+
         binding.imageButton.setOnClickListener {
             it.visibility = View.GONE
             binding.hintText.visibility = View.VISIBLE
@@ -97,7 +102,6 @@ class GameFragment : Fragment() {
                 binding.progressBar.visibility = View.VISIBLE
             } else {
                 if (!isItNotFirstTime) {
-                    nextQuestionTimer.start()
                     isItNotFirstTime = true
                 }
                 binding.textViewUnscrambledWord.text = it
@@ -105,7 +109,29 @@ class GameFragment : Fragment() {
 
             }
         }
+    }
 
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
+
+    override fun onPause() {
+        super.onPause()
+        nextQuestionTimer.pause()
+    }
+
+    override fun onResume() {
+
+        this.colorRed = wordsViewModel.viewModelColorRed
+        this.colorGreen = wordsViewModel.viewModelColorGreen
+        this.colorBlue = wordsViewModel.viewModelColorBlue
+
+        super.onResume()
+        if (!isItNotFirstTime) {
+            nextQuestionTimer.start()
+        } else nextQuestionTimer.onResume(viewLifecycleOwner)
 
         val backButtonCallback = OnBackPressed(true) {
             // callback
@@ -130,24 +156,6 @@ class GameFragment : Fragment() {
         requireActivity().onBackPressedDispatcher.addCallback(backButtonCallback)
     }
 
-
-    override fun onDestroy() {
-        super.onDestroy()
-        _binding = null
-    }
-
-    override fun onPause() {
-        super.onPause()
-        nextQuestionTimer.pause()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        if (!isItNotFirstTime) {
-            nextQuestionTimer.start()
-        } else nextQuestionTimer.onResume(viewLifecycleOwner)
-    }
-
     private fun onSubmitButton() {
         val guessedWord = binding.textInputEditText.text.toString()
         if (!isAnswerGiven) {
@@ -161,11 +169,13 @@ class GameFragment : Fragment() {
 
 
     private fun showDialog() {
+        nextQuestionTimer.pause()
         val dialog = AlertDialog.Builder(requireActivity())
             .setTitle("Your Score: ${wordsViewModel.score.value}")
             .setMessage("Press play to play again and exit to exit the game.")
             .setCancelable(false)
             .setPositiveButton("Play") { dialog, di ->
+                nextQuestionTimer.start()
                 isItNotFirstTime = false
                 wordsViewModel.reset()
                 binding.textViewUnscrambledWord.text = ""
@@ -188,10 +198,10 @@ class GameFragment : Fragment() {
 
         if (!hasNextWord) {
             showDialog()
-            nextQuestionTimer.pause()
         }
         if (hasNextWord) {
             isAnswerGiven = false
+            Log.d(TAG, "updateNextWordOnScreen: hasNextWord $hasNextWord")
             nextQuestionTimer.restart()
         }
         binding.hintText.visibility = View.GONE
@@ -218,16 +228,15 @@ class GameFragment : Fragment() {
         override fun onTimerTick(millisUntilFinished: Long) {
 
             var counter = 30 - (millisUntilFinished / 1000).toInt()
-            Log.d(TAG, "onTick: $counter")
-
-
-            if (counter <= 10) {
-                colorRed += 25
+            if (counter < 16) {
+                colorRed += 17
             }
-            if (counter > 10) {
-                colorGreen -= 12
+            if (counter > 15) {
+                colorGreen -= 17
             }
-            Log.d(TAG, "onTimerTick: ${colorRed},${colorGreen},${colorBlue}")
+            wordsViewModel.viewModelColorRed = colorRed
+            wordsViewModel.viewModelColorGreen = colorGreen
+            wordsViewModel.viewModelColorGreen = colorBlue
 
             binding.progressBar2.progress = (100 - (millisUntilFinished / 300).toInt())
             binding.progressBar2.progressTintList = ColorStateList.valueOf(Color.rgb(colorRed, colorGreen, colorBlue))
@@ -235,10 +244,9 @@ class GameFragment : Fragment() {
         }
 
         override fun onTimerFinish() {
-
-            updateNextWordOnScreen()
-            setColorToGreen()
-            Log.d(TAG, "onTimerFinish: ")
+                updateNextWordOnScreen()
+                setColorToGreen()
+                Log.d(TAG, "onTimerFinish: ")
         }
     }
 
@@ -249,6 +257,7 @@ class GameFragment : Fragment() {
     }
 
 }
+
 
 fun OnBackPressed(enabled: Boolean, callback: () -> Unit) =
     object : OnBackPressedCallback(enabled) {
