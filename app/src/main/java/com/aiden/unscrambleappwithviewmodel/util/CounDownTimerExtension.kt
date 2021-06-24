@@ -1,6 +1,7 @@
 package com.aiden.unscrambleappwithviewmodel.util
 
 import android.os.CountDownTimer
+import android.provider.CalendarContract
 import android.util.Log
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
@@ -23,7 +24,7 @@ abstract class CountDownTimerExt(private var mMillisInFuture: Long, var mInterva
             countDownTimer = object : CountDownTimer(remainingTime, mInterval) {
                 override fun onFinish() {
                     onTimerFinish()
-                    restart()
+//                    restart()
                 }
 
                 override fun onTick(millisUntilFinished: Long) {
@@ -47,6 +48,7 @@ abstract class CountDownTimerExt(private var mMillisInFuture: Long, var mInterva
     }
 
     fun restart() {
+        Log.d(TAG, "restart: ")
         countDownTimer.cancel()
         remainingTime = mMillisInFuture
         isTimerPaused = true
@@ -67,6 +69,7 @@ abstract class CountDownTimerExt(private var mMillisInFuture: Long, var mInterva
         Log.d(TAG, "onResume: fragment resumed")
         start()
     }
+
 
     companion object {
         private const val TAG = "CounDownTimerExtension"
