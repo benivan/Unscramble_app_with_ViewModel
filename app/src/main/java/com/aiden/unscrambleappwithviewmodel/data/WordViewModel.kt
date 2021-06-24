@@ -17,6 +17,21 @@ class WordViewModel : ViewModel() {
     val words: LiveData<List<String>>
         get() = _words
 
+    var viewModelColorRed: Int = 0
+        get() = field        // getter
+        set(value) {         // setter
+            field = value
+        }
+    var viewModelColorGreen: Int = 255
+        get() = field        // getter
+        set(value) {         // setter
+            field = value
+        }
+    var viewModelColorBlue: Int = 0
+        get() = field        // getter
+        set(value) {         // setter
+            field = value
+        }
     private var round: Int = 1
     private var offset: Int = 0
 
