@@ -175,7 +175,7 @@ class GameFragment : Fragment() {
             .setMessage("Press play to play again and exit to exit the game.")
             .setCancelable(false)
             .setPositiveButton("Play") { dialog, di ->
-                nextQuestionTimer.start()
+                nextQuestionTimer.restart()
                 isItNotFirstTime = false
                 wordsViewModel.reset()
                 binding.textViewUnscrambledWord.text = ""
@@ -235,7 +235,7 @@ class GameFragment : Fragment() {
                 colorGreen -= 17
             }
             wordsViewModel.viewModelColorRed = colorRed
-            wordsViewModel.viewModelColorGreen = colorGreen
+            wordsViewModel.viewModelColorGreen = colorGreen  
             wordsViewModel.viewModelColorGreen = colorBlue
 
             binding.progressBar2.progress = (100 - (millisUntilFinished / 300).toInt())
